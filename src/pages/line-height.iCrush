@@ -1,0 +1,170 @@
+<template>
+    <div class='notepage'>
+        <h1>
+            line-height居中使用中的若干细节
+        </h1>
+        <div>
+            我爱你中国i
+        </div>
+    
+        <p>
+            如上，我们有一行文字，如果希望垂直居中，因为是文本，直接设置一个合适的行高即可。可是，如果我们还有一个图片，如下：
+        </p>
+    
+        <div>
+            我爱你中国i
+            <img src="./AC-angle.png">
+        </div>
+    
+        <p>
+            很可惜，没有居中，我们当然明白，这是因为此时垂直对齐方式是默认的基线对齐。图片的基线很显然不是垂直中间的地方。
+        </p>
+    
+        <p>
+            你可能会说，为什么不让垂直对齐方式选择middle中线，好的，我们看看效果：
+        </p>
+    
+        <div>
+            我爱你中国i
+            <img src="./AC-angle.png" style='vertical-align: middle;'>
+        </div>
+    
+        <p>
+            很可惜，依旧没有居中（如果字体设置比较小，基本看不出来，这也是开头我故意设置较大字体的原因，你可以试试）。
+        </p>
+    
+        <p>
+            你可能现在有点疑惑了，是图片没有对齐还是文字没有对齐？为了验证，我们把文字去掉：
+        </p>
+    
+        <div>
+            <img src="./AC-angle.png" style='vertical-align: middle;'>
+        </div>
+    
+        <p>
+            好吧！没有居中。如果想居中，怎么办，方法很多，我常用的方法是设置字体大小为0：
+        </p>
+    
+        <div style='font-size: 0'>
+            <img src="./AC-angle.png" style='vertical-align: middle;'>
+        </div>
+    
+        <p>
+            是的，效果出来了。可是，开头的文字怎么办？你可以使用一个span包裹起来，就像这样：
+        </p>
+    
+        <div style='font-size: 0'>
+            <span style='font-size: 30px;vertical-align: middle;'> 我爱你中国i</span>
+            <img src="./AC-angle.png" style='vertical-align: middle;'>
+        </div>
+    
+        <p>
+            康康，是不是效果很完美？其实一个span没事，只是字体大小无法继承诅咒的，这有点让人沮丧。
+        </p>
+    
+        <h2>
+            为什么设置字体大小为0可以居中？
+        </h2>
+    
+        <p>
+            首先你要明白垂直对齐的意思（比如这里的middle）：图片的中线和容器div的中线对齐。
+        </p>
+    
+        <p>
+            基线和中线（还有top和bottom）是不是和写英文的三线格很像？因此我就猜想，既然中线不是真中线，如果字体大小为0滴。试一下果然在中间了。
+        </p>
+    
+        <h2>
+            一些思考
+        </h2>
+    
+        <p>
+            是不是上面的问题是图片特有的？看下面的例子：
+        </p>
+    
+        <div>
+            <span style='font-size: 30px;vertical-align: middle;'> 我爱你中国i</span>
+        </div>
+    
+        <p>
+            因此我的总结是，所有外盒子是inline性质的都会有。
+        </p>
+    
+        <p>
+            因为理解起来的话，文字也可以看成一个inline(其实有更小的分类，不是特别正确，这里)，为什么line-height可以让文字居中？
+        </p>
+    
+        <p>
+            首先，你要理解的是，文字中的是居中了吗？或者说，那叫居中吗？看下面例子：
+        </p>
+    
+        <div style='height:120px'>
+            我爱你中国i
+        </div>
+    
+        <p>
+            我们设置了高，此时没有居中。这里想说明的是：开头单纯让文字居中其实理解准确的说，是让一行文字高100px，而一行文字本身是在中间的（其实不是一定在中间）。
+        </p>
+    
+        <p>
+            如果下进一步验证，怎么办？很简单，设置font-family,你看看不同字体位置是不是一样的，因此说开头的那种是居中的，其实是不严格的，那里不存在居中或者不居中一说。
+        </p>
+    
+        <h2>
+            一个特殊的例子
+        </h2>
+    
+        <p>
+            你想过没有，如果把图片设置的高度高于line-height会怎么样：
+        </p>
+    
+        <div>
+            我爱你中国i
+            <img src="./AC-angle.png" style="height: 120px;vertical-align: middle;">
+        </div>
+    
+        <p>
+            看看，图片是垂直居中了的（文字的line-height只有100px，因此没有居中是正确的）。我不是很理解，是不是图片控制以后，就类似一行的理解，已经不是居中的问题了，是撑开（这样理解可以解释的通，可是我没有好的办法去验证）。
+        </p>
+    
+        <h2>
+            写在最后
+        </h2>
+    
+        <p>
+            本文中说明的一些理解有待进一步验证和反思，欢迎提出你的见解。
+        </p>
+    </div>
+</template>
+<style>
+div:not(.notepage) {
+    background-color: rgb(104, 195, 231);
+    font-size: 30px;
+    line-height: 100px;
+    padding-left: 30px;
+
+    /* 辅助线条 */
+    background-image: url('../assets/red-point.png');
+    background-repeat: repeat no-repeat;
+    background-position: center center;
+}
+
+div:not(.notepage)>img {
+    outline: 1px solid blue;
+    height: 50px;
+
+    /* 辅助线条 */
+    background-image: url('../assets/red-point.png');
+    background-repeat: repeat no-repeat;
+    background-position: center center;
+}
+
+div:not(.notepage)>span {
+    background-color: pink;
+
+    /* 辅助线条 */
+    background-image: url('../assets/red-point.png');
+    background-repeat: repeat no-repeat;
+    background-position: center center;
+}
+</style>

@@ -1,0 +1,89 @@
+<template>
+    <div class='root'>
+        <ul class="menu">
+            <li class="title">🗿CSS</li>
+            <li @click='goto("margin-auto")' ctrl-active-value:margin-auto='flag'>[0] margin设置auto水平居中失效问题</li>
+            <li @click='goto("align-left-inline")' ctrl-active-value:align-left-inline='flag'>[1] 居中左对齐inline元素</li>
+            <li @click='goto("line-height")' ctrl-active-value:line-height='flag'>[2] line-height居中使用中的若干细节</li>
+            <li @click='goto("overflow-hidden")' ctrl-active-value:overflow-hidden='flag'>[3] 关于overflow设置为hidden后溢出问题理解
+            </li>
+            <li @click='goto("float-height")' ctrl-active-value:float-height='flag'>[4] 浮动导致的高坍塌突然消失了</li>
+        </ul>
+        <div class="page">
+            <component :is='page'></component>
+        </div>
+    </div>
+</template>
+<script>
+    import goRouter from './lazy-loader.js';
+
+    export default {
+        data() {
+            return {
+                page: null,
+                flag: ""
+            };
+        },
+        mounted() {
+
+            let hash = (window.location.hash + "").replace(/^#\/{0,1}/, '');
+
+            // 如果没有指定使用默认路由
+            if (hash == '') window.location.hash = hash = 'margin-auto';
+
+            this.goto(hash);
+
+        },
+        methods: {
+            goto(pagename) {
+                this.flag = pagename;
+                goRouter(pagename, page => {
+                    this.page = page;
+                });
+            }
+        }
+    };
+
+</script>
+<style>
+    div.root {
+        white-space: nowrap;
+    }
+
+    ul.menu,
+    div.page {
+        display: inline-block;
+        vertical-align: top;
+        height: 100vh;
+        padding: 10px;
+        overflow: auto;
+        white-space: normal;
+    }
+
+    ul.menu {
+        border-right: 1px solid gray;
+        width: 330px;
+    }
+
+    ul.menu>li {
+        cursor: pointer;
+        line-height: 2em;
+    }
+
+    ul.menu>li[active='yes'] {
+        color: red;
+    }
+
+    ul.menu>li.title {
+        font-size: 40px;
+        text-align: center;
+        user-select: none;
+        cursor: auto;
+        padding: 10px 0;
+    }
+
+    div.page {
+        width: calc(100vw - 330px);
+    }
+
+</style>

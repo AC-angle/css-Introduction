@@ -1,0 +1,28 @@
+h1,h2,h4,h6{
+    line-height: 2em;
+    margin-top: 10px;
+}
+
+h2{
+    color:red;
+}
+
+h4{
+    color:rgb(74, 10, 248);
+}
+
+h6{
+    color:rgb(37, 110, 247);
+}
+
+p{
+ text-indent: 2em;
+ line-height: 2em;
+ color:rgb(31, 29, 29);
+}
+
+ul>li{
+    line-height: 2.2em;
+    font-size: 14px;
+    color:gray;
+}
