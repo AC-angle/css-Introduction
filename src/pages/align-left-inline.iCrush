@@ -126,7 +126,7 @@
 <style>
     div:not(.notepage) {
         background-color: gray;
-        width: 700px;
+        width: 600px;
         /* 为了最后一个效果，这里必须是0 */
         line-height: 0;
     }
